@@ -93,7 +93,7 @@ status, dan koordinat.
 ```
 
 - `icon`: salah satu dari `truck`, `cpu`, `building`, `pin`, `box`, `radio`. Frontend memetakan nama ini ke ikon lucide.
-- Index unik `{ name: 1 }` dengan collation `{ locale: "id", strength: 2 }`, sehingga "kendaraan" dan "Kendaraan" dianggap sama.
+- Index unik `{ name: 1 }` dengan collation `{ locale: "en", strength: 2 }`, sehingga "kendaraan" dan "Kendaraan" dianggap sama.
 - Seed awal: Kendaraan (`truck`), Perangkat IoT (`cpu`), Fasilitas (`building`).
 - **Hapus jenis** hanya boleh kalau `countDocuments({ typeId })` = 0. Kalau tidak, backend membalas `409 TYPE_IN_USE`.
 - Response `GET /entity-types` menyertakan `entityCount`, supaya UI bisa menampilkan "3 entitas memakai jenis ini" dan menonaktifkan tombol hapus.

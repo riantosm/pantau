@@ -11,6 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/readpref"
 
+	"github.com/riantosm/pantau/backend/internal/entity"
+	"github.com/riantosm/pantau/backend/internal/entitytype"
 	"github.com/riantosm/pantau/backend/internal/httpx"
 )
 
@@ -39,8 +41,14 @@ func New(d Deps) *gin.Engine {
 
 	r.GET("/healthz", healthz(d.Client))
 
-	// Route /api/v1/entities dan /api/v1/entity-types ditambahkan di Tugas 3.
-	_ = r.Group("/api/v1")
+	// Repository Mongo. entityRepo juga dipakai handler jenis untuk menghitung pemakaian,
+	// dan typeRepo dipakai handler entitas untuk memastikan typeId ada.
+	entityRepo := entity.NewMongoRepository(d.DB)
+	typeRepo := entitytype.NewMongoRepository(d.DB)
+
+	api := r.Group("/api/v1")
+	entity.NewHandler(entityRepo, typeRepo).Register(api)
+	entitytype.NewHandler(typeRepo, entityRepo).Register(api)
 
 	r.NoRoute(func(c *gin.Context) {
 		httpx.Error(c, http.StatusNotFound, httpx.CodeNotFound, "Endpoint tidak ditemukan", nil)
