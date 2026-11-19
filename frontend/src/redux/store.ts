@@ -1,6 +1,6 @@
 import { type Action, combineReducers, configureStore, type ThunkAction } from "@reduxjs/toolkit";
 import { persistReducer, persistStore, type PersistConfig, type Storage } from "redux-persist";
-import { entitySlice, entityTypeSlice, mapUiSlice } from "./slices";
+import { entitySlice, entityTypeSlice, mapUiSlice, toastSlice } from "./slices";
 
 const storage: Storage = {
   getItem: (key) => Promise.resolve(window.localStorage.getItem(key)),
@@ -12,6 +12,7 @@ const reducer = combineReducers({
   entity: entitySlice,
   entityType: entityTypeSlice,
   mapUi: mapUiSlice,
+  toast: toastSlice,
 });
 
 // Tanpa auth: tidak ada yang di-persist. Data selalu diambil ulang dari API.

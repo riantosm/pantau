@@ -6,6 +6,7 @@ import { ConnectionStatus } from "@/layouts/map/ConnectionStatus";
 
 interface TopBarProps {
   apiStatus: LoadStatus;
+  /** undefined = tombol disembunyikan (mis. saat form terbuka: satu tombol putih per layar). */
   onAdd?: () => void;
   className?: string;
 }
@@ -26,11 +27,13 @@ export function TopBar({ apiStatus, onAdd, className }: TopBarProps) {
           {APP_TAGLINE}
         </span>
       </div>
-      <div className="flex items-center gap-3.5">
+      <div className="flex min-h-[38px] items-center gap-3.5">
         <ConnectionStatus status={apiStatus} />
-        <Button size="sm" className="h-[38px] px-5 text-sm" onClick={onAdd} disabled={!onAdd}>
-          Tambah entitas
-        </Button>
+        {onAdd ? (
+          <Button size="sm" className="h-[38px] px-5 text-sm" onClick={onAdd}>
+            Tambah entitas
+          </Button>
+        ) : null}
       </div>
     </header>
   );

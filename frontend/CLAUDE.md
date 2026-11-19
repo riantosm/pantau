@@ -53,6 +53,14 @@ src/
   dengan kelas `.pantau-marker--<status>` di `css/index.css` (jangan set `position` di kelas itu, Leaflet
   memakai `position: absolute`). Fit/fly helper di `utils/map.ts` memperhitungkan bottom sheet mobile.
   Overlay di atas peta butuh `z-[1000]` karena pane Leaflet memakai z-index 400–700.
+- **Mode halaman** (`mapUi.mode` + `hooks/use-map-mode.ts`): `browse` → `pick` (klik peta menaruh pin)
+  → `form` (tambah/ubah, pin bisa digeser, koordinat sinkron dua arah dengan input) · `types` (kelola jenis).
+  Isi panel dirender **satu kali**: panel kanan di desktop atau bottom sheet di mobile (`useIsDesktop`),
+  supaya state form tidak terduplikasi.
+- **Form:** `schemas/entity.schema.ts` & `entity-type.schema.ts` (aturan sama dengan backend). Error backend
+  (`400 VALIDATION_ERROR`, `409 NAME_TAKEN`) dipetakan ke field lewat `getApiFieldErrors(error.cause)`.
+  `404` saat ubah/hapus → entitas dibuang dari daftar + toast. `409 TYPE_IN_USE` → toast + muat ulang jenis.
+- **Toast:** `toastSlice` + `hooks/use-toast.ts`, ditampilkan `molecules/ToastView` di atas peta.
 - **Filter daftar** disaring di browser (`utils/entity-filter.ts`); data kecil, jadi tidak perlu request ulang.
 - Responsif: desktop `lg` ke atas (top bar · sidebar · peta · panel kanan), di bawahnya peta penuh + bottom sheet.
 

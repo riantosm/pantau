@@ -40,3 +40,22 @@ export function flyToPoint(map: L.Map, latitude: number, longitude: number): voi
   const target = map.unproject(map.project([latitude, longitude], zoom).add([0, offsetY]), zoom);
   map.flyTo(target, zoom, { duration: 0.8 });
 }
+
+/** Tinggi strip peta yang tetap terlihat di atas sheet form mobile (h-[calc(100dvh-108px)]). */
+const MOBILE_FORM_STRIP_PX = 108;
+
+/**
+ * Pastikan pin lokasi draf terlihat. Desktop: geser hanya kalau pin keluar layar.
+ * Mobile: sheet form menutupi hampir seluruh peta, jadi pin ditaruh di tengah strip atas.
+ */
+export function revealDraftPin(map: L.Map, latitude: number, longitude: number): void {
+  const point = L.latLng(latitude, longitude);
+  if (isDesktopViewport()) {
+    if (!map.getBounds().pad(-0.1).contains(point)) map.panTo(point);
+    return;
+  }
+  const size = map.getSize();
+  const shift = size.y / 2 - MOBILE_FORM_STRIP_PX / 2;
+  const center = map.unproject(map.project(point).add([0, shift]));
+  map.panTo(center);
+}
