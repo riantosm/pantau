@@ -289,10 +289,16 @@ Desain lengkap ada di artifact [Pantau — UI/UX Design](https://claude.ai/artif
 > Ditangani dengan banner "Menyiapkan server" di FE + catatan di README.
 
 ### Netlify (frontend)
-1. Import repo, lalu isi Base directory `frontend`, Build `yarn build`, Publish `dist`.
-2. Env: `VITE_API_BASE_URL=https://pantau-2am8.onrender.com/api/v1`.
-3. `netlify.toml` berisi redirect SPA `/* → /index.html 200`.
-4. Setelah dapat URL Netlify, perbarui `ALLOWED_ORIGINS` di Render.
+1. Import repo, lalu isi **Base directory `frontend`**. Build, publish, versi Node, dan `VITE_API_BASE_URL`
+   sudah ada di `frontend/netlify.toml`, jadi tidak perlu mengisi env var di dashboard.
+2. `netlify.toml` juga berisi redirect SPA `/* → /index.html 200` dan cache panjang untuk `/assets/*`.
+3. Setelah dapat URL Netlify, tambahkan ke `ALLOWED_ORIGINS` di Render (dipisah koma, tanpa `/` di akhir;
+   backend juga membuang `/` di akhir otomatis).
+4. Daftarkan domain Netlify di akun Stadia Maps (Authentication → Domain) supaya tile peta tampil.
+5. Matikan **Powered by Netlify badge** (Project configuration → General): badge default-nya menutupi
+   pojok kanan bawah, tempat tombol Simpan di panel form.
+
+Hasil: https://pantau-map.netlify.app (frontend) · https://pantau-2am8.onrender.com (API).
 
 ---
 

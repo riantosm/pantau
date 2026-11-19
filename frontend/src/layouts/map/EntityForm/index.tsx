@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
@@ -90,16 +90,23 @@ export function EntityForm({
     name: ["latitude", "longitude", "name", "description"],
   });
 
-  // Peta → form: pin dipindah (klik/geser) → isi ulang input koordinat.
+  // Disimpan di ref supaya efek di bawah TIDAK jalan ulang saat form disubmit.
+  // (Kalau jalan ulang, koordinat salah ketik seperti "91" akan diam-diam diganti posisi pin.)
+  const submittedRef = useRef(false);
+  useEffect(() => {
+    submittedRef.current = submitCount > 0;
+  }, [submitCount]);
+
+  // Peta → form: pin dipindah (klik/geser) → isi ulang input koordinat. Hanya saat pin berubah.
   useEffect(() => {
     if (!draft) return;
     const lat = parseCoordinate(getValues("latitude"));
     const lng = parseCoordinate(getValues("longitude"));
     if (lat === draft.latitude && lng === draft.longitude) return;
-    const opts = { shouldDirty: true, shouldValidate: submitCount > 0 };
+    const opts = { shouldDirty: true, shouldValidate: submittedRef.current };
     setValue("latitude", formatCoordinate(draft.latitude), opts);
     setValue("longitude", formatCoordinate(draft.longitude), opts);
-  }, [draft, getValues, setValue, submitCount]);
+  }, [draft, getValues, setValue]);
 
   // Form → peta: koordinat diketik dan valid → pin ikut pindah.
   useEffect(() => {

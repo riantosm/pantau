@@ -15,13 +15,13 @@ Deadline: ± **20 Nov 2026** (2 hari setelah soal diterima). Blueprint lengkap: 
 | 5 | **Frontend scaffold & layout**: `/init-react` (React + Vite + TS, Tailwind v4, Redux Toolkit + axios), token tema Midnight Vault dari artboard Design system (Playfair Display + Inter), layout desktop (top bar, sidebar, peta, panel) + mobile (bottom sheet) | `yarn dev` → layout sesuai desain di desktop & mobile | Jawab pertanyaan setup dari skill | ✅ |
 | 6 | **Peta & lihat data**: react-leaflet + tile gelap Stadia (CARTO kini butuh API key), marker kustom (warna + bentuk per status), marker ↔ daftar ↔ panel detail tersambung, fly-to, banner server bangun, state loading/kosong/error | Marker data seed muncul, klik marker/daftar → detail terbuka | — | ✅ |
 | 7 | **Tambah, ubah, hapus + validasi**: mode pilih lokasi (klik peta), form `react-hook-form` + `zod`, pin bisa digeser, error BE dipetakan ke field, dialog hapus, toast. Panel **Kelola jenis** (tambah/ubah nama + ikon, hapus nonaktif jika dipakai) | Semua alur CRUD entitas & jenis jalan; input salah ditolak FE **dan** BE (uji juga via curl) | — | ✅ |
-| 8 | **Deploy frontend ke Netlify + uji E2E**: `netlify.toml`, `VITE_API_BASE_URL`, update `ALLOWED_ORIGINS` di Render, daftarkan domain Netlify di Stadia Maps | Situs live di `https://<site>.netlify.app`, CRUD jalan dari production | Hubungkan repo di Netlify & isi env var | 🔄 |
+| 8 | **Deploy frontend ke Netlify + uji E2E**: `netlify.toml`, `VITE_API_BASE_URL`, update `ALLOWED_ORIGINS` di Render, daftarkan domain Netlify di Stadia Maps | Situs live di `https://<site>.netlify.app`, CRUD jalan dari production | Hubungkan repo di Netlify & isi env var | 👀 |
 | 9 | **Dokumentasi & submit**: `README.md` (cara run lokal, link demo, alasan library, workflow Agentic AI, fitur belum selesai), `CLAUDE.md`, rapikan repo | README lengkap & repo publik bisa dibuka penguji | Kirim email ke 2 alamat di PDF (kamu sendiri) | ⬜ |
 
 Catatan:
 - **Urutan prioritas:** tugas 2–4 (backend + deploy) dikerjakan lebih dulu karena Go masih baru. Kalau waktu mepet, fitur bonus di plan (bbox, docker-compose, Vitest) dilewati dan dicatat di README sebagai "belum selesai".
 - Akun & API key pihak ketiga harus dibuat sendiri olehmu (aku tidak bisa mendaftar atau memasukkan kredensial). Aku akan kasih panduan langkah demi langkah di tugas yang membutuhkannya.
 - Jangan commit file `.env`. Cukup `.env.example`.
-- API production: https://pantau-2am8.onrender.com (`/healthz`, `/api/v1/...`).
+- Situs production: https://pantau-map.netlify.app · API: https://pantau-2am8.onrender.com (`/healthz`, `/api/v1/...`).
 - Pesan commit langsung ke isinya, tanpa prefiks "Tugas x: " (contoh: `Tambah endpoint healthz dan koneksi Mongo`). Repo: [github.com/riantosm/pantau](https://github.com/riantosm/pantau).
 - Referensi desain: artifact [Pantau — UI/UX Design](https://claude.ai/artifact/PTAyQ4EPYt4tHhrVb8Pr7X) (prototipe desktop interaktif, 2 layar mobile, alur → API, state, design system).
