@@ -1,8 +1,22 @@
+# Netlify: set "Base directory" = frontend saat menghubungkan repo (monorepo).
 [build]
   command = "yarn build"
   publish = "dist"
 
+[build.environment]
+  # Vite 8 butuh Node ≥ 20.19; samakan dengan versi lokal.
+  NODE_VERSION = "24"
+  # Bukan rahasia (URL publik API), jadi aman disimpan di sini.
+  VITE_API_BASE_URL = "https://pantau-2am8.onrender.com/api/v1"
+
+# SPA: semua path dilayani index.html, routing ditangani React Router.
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+# Aset hasil build punya hash di nama file, jadi aman di-cache lama.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
