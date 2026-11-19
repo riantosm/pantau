@@ -1,0 +1,112 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource/playfair-display/400.css";
+
+/*
+ * Tema Midnight Vault (versi terang), satu-satunya tema: aplikasi hanya punya mode gelap.
+ * Komponen hanya memakai nama token semantik di bawah (bg-surface, text-text-2, …),
+ * tidak pernah hex inline. Sumber nilai: artboard "Design system" di artifact desain.
+ */
+:root {
+  --brand: #ffffff;
+
+  /* Permukaan, dari paling belakang ke paling depan */
+  --bg: #16171c;
+  --map: #1a1c21;
+  --surface: #1b1d23;
+  --surface-2: #22242b;
+  --border: #2c2e36;
+  --border-strong: #3a3d47;
+
+  /* Teks, dari paling terang ke paling redup */
+  --text-strong: #ffffff;
+  --text: #e6e7ec;
+  --text-2: #cdcfd6;
+  --text-3: #b5b8c2;
+  --text-muted: #9da0ad;
+  --text-faint: #848796;
+
+  /* Tombol utama putih (maks. satu per layar) */
+  --primary: var(--brand);
+  --primary-fg: #000000;
+
+  /* Copper: hanya untuk eyebrow kategori */
+  --copper: #cc9166;
+
+  /* Status: selalu warna + bentuk + teks */
+  --success: #8fb59a;
+  --success-line: #56735e;
+  --warning: #d4b06a;
+  --warning-line: #6e5c38;
+  --neutral: #848796;
+  --neutral-line: #3a3d47;
+  --danger: #e59a9a;
+  --danger-line: #5a3434;
+  --danger-input: #b06464;
+
+  --scrim: rgb(12 13 16 / 0.66);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-map: var(--map);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-text-strong: var(--text-strong);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-copper: var(--copper);
+
+  --color-success: var(--success);
+  --color-success-line: var(--success-line);
+  --color-warning: var(--warning);
+  --color-warning-line: var(--warning-line);
+  --color-neutral: var(--neutral);
+  --color-neutral-line: var(--neutral-line);
+  --color-danger: var(--danger);
+  --color-danger-line: var(--danger-line);
+  --color-danger-input: var(--danger-input);
+
+  --color-scrim: var(--scrim);
+}
+
+@theme {
+  --font-sans: "Inter Variable", "Inter", system-ui, "Segoe UI", Roboto, sans-serif;
+  /* Serif hanya untuk teks ≥ 28px: judul, nama entitas, angka ringkasan */
+  --font-serif: "Playfair Display", Georgia, serif;
+
+  /* Tombol/input/tag = pill, kartu = 10px, textarea = 16px. Tanpa bayangan. */
+  --radius-card: 10px;
+  --radius-control: 9999px;
+  --radius-area: 16px;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-bg font-sans text-[15px] leading-normal text-text antialiased;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-faint);
+  }
+}

@@ -42,7 +42,7 @@ status, dan koordinat.
 | Frontend | React + Vite + TypeScript, scaffold dengan skill `/init-react` | Wajib dari soal. Vite cepat, dan konvensinya sudah dipakai di project lain (atomic design, alias `@/`, Tailwind v4, `netlify.toml`) |
 | Map | `leaflet` + `react-leaflet` | Gratis tanpa API key, ringan, dokumentasi banyak, mudah membuat marker kustom dan event klik peta |
 | Tile peta | CARTO Dark Matter (berbasis OpenStreetMap) | Gratis dan gelap, cocok dengan tema Midnight Vault, sehingga marker berwarna terlihat jelas |
-| State | Redux Toolkit + **RTK Query** | RTK Query mengurus fetch, cache, loading/error, dan *invalidate* otomatis setelah create/update/delete. State UI (entitas terpilih, mode tambah, filter) disimpan di slice biasa |
+| State & HTTP | Redux Toolkit + `axios`, pola konvensi `/init-react`: type → service → slice → hook | Sama dengan project lain milik user. Service memanggil API dan melempar pesan ramah pengguna; slice menyimpan data + status muat; komponen hanya memakai hook. State UI (entitas terpilih, filter) di slice `mapUi` |
 | Form + validasi FE | `react-hook-form` + `zod` | Skema validasi sekali tulis, type-safe, dan error per field |
 | Styling | Tailwind CSS v4 + token tema **Midnight Vault** (gelap, versi terang) | Sesuai konvensi. Semua warna lewat token `@theme`, jadi tidak ada hex yang tersebar di komponen |
 | Font | Playfair Display (judul ≥ 28px, angka) + Inter (UI) dari Google Fonts | Kombinasi serif–sans membuat UI tidak terlihat seperti template SaaS biasa |
@@ -213,10 +213,13 @@ pantau/
 │   └── Dockerfile                # opsional, untuk docker-compose lokal
 ├── frontend/                     # hasil /init-react (React + Vite + TS)
 │   ├── src/
-│   │   ├── components/{atoms,molecules,organisms}/   # MapView, EntityMarker, EntityList, EntityForm, ...
-│   │   ├── features/entities/    # RTK Query api slice, zod schema, types, ui slice
-│   │   └── pages/MapPage.tsx
-│   ├── .env.example              # VITE_API_URL
+│   │   ├── app/                  # AppRouter, ErrorBoundary, pages/MapPage
+│   │   ├── components/{atoms,molecules}/   # Button, Chip, StatusMark, SearchField, ...
+│   │   ├── layouts/map/          # TopBar, EntityList, EntityDetail, MapStage, MobileSheet, ...
+│   │   ├── hooks/ · redux/ · services/ · types/ · schemas/ · utils/
+│   │   └── css/index.css         # token tema Midnight Vault (Tailwind v4)
+│   ├── .env.example              # VITE_API_BASE_URL
+│   ├── CLAUDE.md                 # konvensi frontend
 │   └── netlify.toml
 ├── README.md                     # dokumentasi untuk penguji
 ├── CLAUDE.md                     # instruksi Agentic AI (wajib dari soal)
@@ -287,7 +290,7 @@ Desain lengkap ada di artifact [Pantau — UI/UX Design](https://claude.ai/artif
 
 ### Netlify (frontend)
 1. Import repo, lalu isi Base directory `frontend`, Build `yarn build`, Publish `dist`.
-2. Env: `VITE_API_URL=https://<service>.onrender.com/api/v1`.
+2. Env: `VITE_API_BASE_URL=https://pantau-2am8.onrender.com/api/v1`.
 3. `netlify.toml` berisi redirect SPA `/* → /index.html 200`.
 4. Setelah dapat URL Netlify, perbarui `ALLOWED_ORIGINS` di Render.
 
@@ -298,7 +301,7 @@ Desain lengkap ada di artifact [Pantau — UI/UX Design](https://claude.ai/artif
 - **Backend:** `go test ./...`. Table-driven test untuk validasi (nama kosong, lat 91, type salah, `latitude: 0` valid)
   dan test handler dengan `httptest` + repository palsu (201, 400, 404, 204).
   Untuk jenis: nama kembar → 409 `NAME_TAKEN`, hapus jenis yang dipakai → 409 `TYPE_IN_USE`, entitas dengan `typeId` tak dikenal → 400.
-- **Frontend:** `yarn build` (type-check) + `yarn lint`. Opsional: Vitest untuk skema `zod`.
+- **Frontend:** `yarn build` (type-check) + `yarn lint` + `yarn test` (Vitest: util filter, skema `zod`).
 - **Manual E2E di production:** tambah, lihat detail, ubah (geser pin), hapus, coba input salah, lalu refresh untuk memastikan data tersimpan.
 
 ---
