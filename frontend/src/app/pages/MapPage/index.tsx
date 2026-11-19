@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type L from "leaflet";
+import { BrandMark } from "@/components/atoms/BrandMark";
 import { Button } from "@/components/atoms/Button";
 import { ConfirmDialog } from "@/components/molecules/ConfirmDialog";
 import { SearchField } from "@/components/molecules/SearchField";
@@ -310,7 +311,8 @@ export function MapPage() {
               {!isDesktop && (mode === "browse" || mode === "pick") ? (
                 <div className="absolute inset-x-4 top-4 flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-serif text-[28px] leading-none text-text-strong">
+                    <span className="flex items-center gap-2 font-serif text-[28px] leading-none text-text-strong">
+                      <BrandMark size={30} />
                       {APP_NAME}
                     </span>
                     <ConnectionStatus status={status} variant="pill" />

@@ -45,10 +45,10 @@ status, dan koordinat.
 | State & HTTP | Redux Toolkit + `axios`, pola konvensi `/init-react`: type → service → slice → hook | Sama dengan project lain milik user. Service memanggil API dan melempar pesan ramah pengguna; slice menyimpan data + status muat; komponen hanya memakai hook. State UI (entitas terpilih, filter) di slice `mapUi` |
 | Form + validasi FE | `react-hook-form` + `zod` | Skema validasi sekali tulis, type-safe, dan error per field |
 | Styling | Tailwind CSS v4 + token tema **Midnight Vault** (gelap, versi terang) | Sesuai konvensi. Semua warna lewat token `@theme`, jadi tidak ada hex yang tersebar di komponen |
-| Font | Playfair Display (judul ≥ 28px, angka) + Inter (UI) dari Google Fonts | Kombinasi serif–sans membuat UI tidak terlihat seperti template SaaS biasa |
+| Font | Playfair Display (judul ≥ 28px, angka) + Inter (UI) lewat `@fontsource` (di-bundle, tanpa request ke Google) | Kombinasi serif–sans membuat UI tidak terlihat seperti template SaaS biasa |
 | Ikon | `lucide-react` | Sesuai konvensi, ada ikon truck, cpu, building |
-| Backend | Go 1.23+ + **Gin** | Paling ramah untuk pemula Go, contoh di internet sangat banyak, dan validasi bawaan lewat tag struct |
-| Validasi BE | `go-playground/validator` (bawaan Gin) | Aturan cukup ditulis sebagai tag, misalnya `binding:"required,min=3,max=100"` |
+| Backend | Go 1.27 + **Gin** | Paling ramah untuk pemula Go, contoh di internet sangat banyak, dan validasi bawaan lewat tag struct |
+| Validasi BE | `go-playground/validator` (instance sendiri di `internal/httpx`) | Aturan ditulis sebagai tag `validate:"required,min=3,max=100"`, pesan diterjemahkan ke bahasa Indonesia per field |
 | DB driver | `go.mongodb.org/mongo-driver/v2` | Driver resmi MongoDB |
 | CORS | `github.com/gin-contrib/cors` | Mengizinkan origin Netlify dari env |
 | Config | `github.com/joho/godotenv` (lokal saja) | Membaca `.env` saat development. Di Render cukup env var |

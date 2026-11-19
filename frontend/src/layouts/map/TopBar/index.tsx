@@ -1,3 +1,4 @@
+import { BrandMark } from "@/components/atoms/BrandMark";
 import { Button } from "@/components/atoms/Button";
 import { APP_NAME, APP_TAGLINE } from "@/constants/app";
 import type { LoadStatus } from "@/types/api.types";
@@ -19,8 +20,9 @@ export function TopBar({ apiStatus, onAdd, className }: TopBarProps) {
         className,
       )}
     >
-      <div className="flex items-baseline gap-5">
-        <h1 className="font-serif text-[28px] leading-none tracking-[0.01em] text-text-strong">
+      <div className="flex items-center gap-5">
+        <h1 className="flex items-center gap-2.5 font-serif text-[28px] leading-none tracking-[0.01em] text-text-strong">
+          <BrandMark size={32} />
           {APP_NAME}
         </h1>
         <span className="text-[13px] font-semibold tracking-[-0.02em] text-text-muted">

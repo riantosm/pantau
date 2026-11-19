@@ -1,9 +1,13 @@
-# CLAUDE.md
+# 🤖 CLAUDE.md (frontend)
 
 Pantau (frontend): React 19 + Vite + TypeScript + Tailwind CSS v4 + Redux Toolkit.
 Satu halaman peta untuk melihat dan mengelola entitas berlokasi. Backend Go ada di `../backend`.
 
-## Commands
+> 🎨 **Semua UI wajib mengikuti [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md)** (token, tipografi, komponen, status,
+> peta, responsif, copy). Baca sebelum membuat/mengubah komponen, dan jalankan checklist di bagian akhirnya.
+> Kalau butuh token atau komponen baru, tambahkan dulu ke design system, baru dipakai.
+
+## 🛠️ Commands
 
 - `yarn dev`: dev server di http://localhost:5173
 - `yarn build`: type-check (`tsc -b`) + build ke `dist/`
@@ -12,7 +16,7 @@ Satu halaman peta untuk melihat dan mengelola entitas berlokasi. Backend Go ada 
 - `yarn format` / `yarn format:check`: Prettier
 - `yarn test` / `yarn test:watch`: Vitest
 
-## Batasan
+## 🚫 Batasan
 
 Kecuali user menyuruhnya secara eksplisit di chat (izin per perintah, bukan izin umum):
 
@@ -22,7 +26,7 @@ Kecuali user menyuruhnya secara eksplisit di chat (izin per perintah, bukan izin
 
 Boleh tanpa izin: membuat/mengedit file, `yarn add`, `yarn lint`, `yarn build`, `yarn test`, `yarn format`.
 
-## Arsitektur
+## 🧱 Arsitektur
 
 ```
 src/
@@ -64,18 +68,19 @@ src/
 - **Filter daftar** disaring di browser (`utils/entity-filter.ts`); data kecil, jadi tidak perlu request ulang.
 - Responsif: desktop `lg` ke atas (top bar · sidebar · peta · panel kanan), di bawahnya peta penuh + bottom sheet.
 
-## Konvensi
+## 📏 Konvensi
 
 - Komponen: atomic design, `Folder/index.tsx`, named export, varian `Record<Union, string>` + `cn()`.
 - Warna hanya dari token semantik di `src/css/index.css`; tanpa hex inline, tanpa `dark:`.
   Aplikasi **hanya punya tema gelap** (Midnight Vault), jadi tidak ada ThemeToggle.
-- Aturan desain:
+- Aturan desain (lengkapnya di [`DESIGN_SYSTEM.md`](DESIGN_SYSTEM.md)):
   1. Tombol putih terisi (`Button variant="primary"`) maksimal satu per layar.
   2. Serif (`font-serif`, Playfair Display) hanya untuk teks ≥ 28px: judul, nama entitas, angka ringkasan.
   3. Copper (`text-copper`, komponen `Eyebrow`) hanya untuk eyebrow kategori.
   4. Tanpa bayangan: pisahkan dengan tingkat permukaan (`bg` → `surface` → `surface-2`) + garis 1px.
   5. Tombol/input/tag = pill (`rounded-control`), kartu = `rounded-card` (10px), textarea = `rounded-area` (16px).
   6. Status selalu warna + bentuk + teks (`StatusMark` + label), tidak pernah warna saja.
+- Logo: komponen `BrandMark` (warna dari token). Dipakai di header dan `LoadingScreen`; sumber SVG di `../docs/brand/`.
 - Ikon `lucide-react`; ikon jenis entitas dipetakan di `constants/entity-icons.ts`. Import internal pakai `@/`.
 - Penamaan: hook `use-xxx.ts`, service `xxx.service.ts` (objek `xxxService`), tipe `xxx.types.ts`,
   slice `redux/slices/<x>Slice/index.ts`, route di `ROUTES` (`constants/routes.ts`).
