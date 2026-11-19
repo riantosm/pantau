@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
-import { Check, Copy, X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Check, Copy, ExternalLink, Navigation, X } from "lucide-react";
 import { Button } from "@/components/atoms/Button";
+import { buttonClass } from "@/components/atoms/Button/button-styles";
 import { Eyebrow } from "@/components/atoms/Eyebrow";
 import { IconButton } from "@/components/atoms/IconButton";
 import { StatusBadge } from "@/components/atoms/StatusBadge";
 import type { EntityType } from "@/types/entity-type.types";
 import type { Entity } from "@/types/entity.types";
+import { cn } from "@/utils/cn";
 import { formatCoords, formatDateTime } from "@/utils/format";
+import { buildMapsLink, detectMapsPlatform } from "@/utils/maps-link";
 
 interface EntityDetailProps {
   entity: Entity;
@@ -42,7 +45,11 @@ export function EntityDetail({ entity, type, onClose, onEdit, onDelete }: Entity
           <p className="font-light text-text-3">{entity.description || "Belum ada deskripsi."}</p>
         </div>
 
-        <CoordinateCard latitude={entity.latitude} longitude={entity.longitude} />
+        <CoordinateCard
+          name={entity.name}
+          latitude={entity.latitude}
+          longitude={entity.longitude}
+        />
 
         <dl className="flex flex-col text-sm">
           <dt className="border-b border-border pb-2 text-[13px] text-text-muted">Atribut</dt>
@@ -79,9 +86,21 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-function CoordinateCard({ latitude, longitude }: { latitude: number; longitude: number }) {
+interface CoordinateCardProps {
+  name: string;
+  latitude: number;
+  longitude: number;
+}
+
+function CoordinateCard({ name, latitude, longitude }: CoordinateCardProps) {
   const [copied, setCopied] = useState(false);
   const coords = formatCoords(latitude, longitude);
+  // Desktop → Google Maps di tab baru; Android/iOS → langsung ke aplikasi peta di HP.
+  const platform = useMemo(
+    () => detectMapsPlatform(navigator.userAgent, navigator.maxTouchPoints),
+    [],
+  );
+  const maps = buildMapsLink(latitude, longitude, name, platform);
 
   useEffect(() => {
     if (!copied) return;
@@ -112,6 +131,20 @@ function CoordinateCard({ latitude, longitude }: { latitude: number; longitude: 
         />
       </div>
       <span className="text-xs text-text-faint">Latitude, longitude · WGS84</span>
+      <a
+        href={maps.href}
+        {...(maps.newTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        className={cn(buttonClass({ variant: "subtle", size: "sm" }), "mt-2 self-start")}
+      >
+        <Navigation strokeWidth={1.5} aria-hidden />
+        {maps.label}
+        {maps.newTab ? (
+          <>
+            <ExternalLink strokeWidth={1.5} className="text-text-muted" aria-hidden />
+            <span className="sr-only">(tab baru)</span>
+          </>
+        ) : null}
+      </a>
     </div>
   );
 }

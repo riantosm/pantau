@@ -91,7 +91,7 @@ Sesuai functional requirement soal:
 | ➕ Menambah entitas di peta | **Tambah entitas** → klik titik di peta (atau isi koordinat manual) → isi form. Pin lokasi bisa digeser, koordinat di form ikut berubah, dan sebaliknya |
 | ✏️ Mengubah entitas di peta | Detail → **Ubah**: form terisi data lama, pin bisa digeser ke lokasi baru |
 | 🗑️ Menghapus entitas | Detail → **Hapus** → dialog konfirmasi yang menyebut nama entitas |
-| 🔍 Melihat detail di peta | Klik marker atau baris daftar → peta terbang ke lokasi, panel detail berisi status, deskripsi, koordinat (bisa disalin), atribut, waktu dibuat/diubah |
+| 🔍 Melihat detail di peta | Klik marker atau baris daftar → peta terbang ke lokasi, panel detail berisi status, deskripsi, koordinat (bisa disalin), atribut, waktu dibuat/diubah. Tombol **Buka di Maps**: Google Maps di tab baru (desktop), langsung ke aplikasi peta di HP (Android `geo:`, iPhone Apple Maps) |
 | 🔒 Validasi FE & BE | Aturan yang sama di `zod` (browser) dan `validator` (Go). Error dari backend dipetakan ke input yang sama. Lihat [Validasi](#-validasi-di-frontend-dan-backend) |
 
 Tambahan:
