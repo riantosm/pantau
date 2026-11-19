@@ -49,6 +49,10 @@ src/
 - **Render free tidur** setelah ±15 menit: request pertama bisa ±30–60 detik (timeout axios 90 detik).
 - **CORS:** backend hanya mengizinkan origin di env `ALLOWED_ORIGINS` (dev `http://localhost:5173`
   - URL Netlify). Tidak ada header `Authorization` karena tanpa auth.
+- **Peta:** react-leaflet + tile Stadia Alidade Smooth Dark (`constants/map.ts`). Marker = `L.divIcon`
+  dengan kelas `.pantau-marker--<status>` di `css/index.css` (jangan set `position` di kelas itu, Leaflet
+  memakai `position: absolute`). Fit/fly helper di `utils/map.ts` memperhitungkan bottom sheet mobile.
+  Overlay di atas peta butuh `z-[1000]` karena pane Leaflet memakai z-index 400–700.
 - **Filter daftar** disaring di browser (`utils/entity-filter.ts`); data kecil, jadi tidak perlu request ulang.
 - Responsif: desktop `lg` ke atas (top bar · sidebar · peta · panel kanan), di bawahnya peta penuh + bottom sheet.
 

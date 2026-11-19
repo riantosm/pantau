@@ -41,7 +41,7 @@ status, dan koordinat.
 |---|---|---|
 | Frontend | React + Vite + TypeScript, scaffold dengan skill `/init-react` | Wajib dari soal. Vite cepat, dan konvensinya sudah dipakai di project lain (atomic design, alias `@/`, Tailwind v4, `netlify.toml`) |
 | Map | `leaflet` + `react-leaflet` | Gratis tanpa API key, ringan, dokumentasi banyak, mudah membuat marker kustom dan event klik peta |
-| Tile peta | CARTO Dark Matter (berbasis OpenStreetMap) | Gratis dan gelap, cocok dengan tema Midnight Vault, sehingga marker berwarna terlihat jelas |
+| Tile peta | Stadia Maps *Alidade Smooth Dark* (berbasis OpenStreetMap) | Gratis untuk non-komersial dan gelap, cocok dengan tema Midnight Vault. Rencana awal CARTO Dark Matter ternyata kini mewajibkan API key. Stadia tanpa kunci di localhost; di production cukup daftarkan domain Netlify di akun Stadia |
 | State & HTTP | Redux Toolkit + `axios`, pola konvensi `/init-react`: type → service → slice → hook | Sama dengan project lain milik user. Service memanggil API dan melempar pesan ramah pengguna; slice menyimpan data + status muat; komponen hanya memakai hook. State UI (entitas terpilih, filter) di slice `mapUi` |
 | Form + validasi FE | `react-hook-form` + `zod` | Skema validasi sekali tulis, type-safe, dan error per field |
 | Styling | Tailwind CSS v4 + token tema **Midnight Vault** (gelap, versi terang) | Sesuai konvensi. Semua warna lewat token `@theme`, jadi tidak ada hex yang tersebar di komponen |

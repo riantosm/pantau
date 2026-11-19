@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@fontsource-variable/inter";
 @import "@fontsource/playfair-display/400.css";
+/* Dimasukkan ke layer base supaya penyesuaian tema di @layer components di bawah bisa menimpanya. */
+@import "leaflet/dist/leaflet.css" layer(base);
 
 /*
  * Tema Midnight Vault (versi terang), satu-satunya tema: aplikasi hanya punya mode gelap.
@@ -108,5 +110,92 @@
   input::placeholder,
   textarea::placeholder {
     color: var(--text-faint);
+  }
+}
+
+/*
+ * Leaflet: disesuaikan dengan tema. Marker dibuat dengan L.divIcon (lihat layouts/map/MapView),
+ * jadi bentuk & warnanya diatur di sini memakai token yang sama dengan StatusMark.
+ */
+@layer components {
+  .leaflet-container {
+    background: var(--map);
+    font-family: inherit;
+  }
+  .leaflet-container a {
+    color: var(--text-muted);
+  }
+  .leaflet-control-attribution.leaflet-control {
+    margin: 0 12px 8px 0;
+    padding: 0;
+    background: transparent;
+    font-size: 11px;
+    color: var(--text-faint);
+  }
+  .leaflet-control-attribution a {
+    color: var(--text-faint);
+  }
+
+  /* Jangan set position di sini: Leaflet memosisikan ikon dengan position: absolute. */
+  .pantau-marker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0;
+  }
+  .pantau-marker__dot {
+    box-sizing: border-box;
+    border: 1.5px solid;
+  }
+  .pantau-marker--active .pantau-marker__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border-color: var(--success);
+    background: var(--success);
+  }
+  .pantau-marker--maintenance .pantau-marker__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 1px;
+    transform: rotate(45deg);
+    border-color: var(--warning);
+    background: var(--warning);
+  }
+  .pantau-marker--inactive .pantau-marker__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border-color: var(--neutral);
+    background: transparent;
+  }
+  /* Cincin tipis di sekitar marker terpilih (tanpa bayangan, sesuai aturan desain) */
+  .pantau-marker--selected::before {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    border: 1px solid color-mix(in oklab, var(--text-strong) 40%, transparent);
+  }
+  .pantau-marker:focus-visible {
+    outline: 2px solid var(--text-strong);
+    outline-offset: 2px;
+    border-radius: 50%;
+  }
+
+  /* Label nama di samping marker terpilih */
+  .leaflet-tooltip.pantau-label {
+    padding: 4px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 9999px;
+    background: var(--surface-2);
+    color: var(--text-strong);
+    font-size: 13px;
+    font-weight: 500;
+    box-shadow: none;
+  }
+  .leaflet-tooltip.pantau-label::before {
+    display: none;
   }
 }
