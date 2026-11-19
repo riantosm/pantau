@@ -235,7 +235,8 @@ export function MapPage() {
       <MapNotice
         tone="danger"
         title="Data tidak bisa dimuat"
-        message={`${error ?? "Terjadi kesalahan."} Periksa koneksi internet, lalu coba lagi.`}
+        // Pesan dari service sudah berisi saran (mis. "Server tidak bisa dihubungi. Periksa koneksi…").
+        message={error ?? "Periksa koneksi internet, lalu coba lagi."}
         action={
           <Button variant="outline" onClick={retry}>
             Coba lagi

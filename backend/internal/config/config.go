@@ -46,11 +46,13 @@ func getEnv(key, fallback string) string {
 	return fallback
 }
 
-// splitCSV mengubah "a, b,c" menjadi []string{"a", "b", "c"}.
+// splitCSV mengubah "a, b/,c" menjadi []string{"a", "b", "c"}.
+// Garis miring di akhir dibuang: browser mengirim header Origin tanpa "/",
+// jadi "https://situs.netlify.app/" tidak akan pernah cocok kalau tidak dirapikan.
 func splitCSV(s string) []string {
 	var out []string
 	for _, part := range strings.Split(s, ",") {
-		if p := strings.TrimSpace(part); p != "" {
+		if p := strings.TrimRight(strings.TrimSpace(part), "/"); p != "" {
 			out = append(out, p)
 		}
 	}

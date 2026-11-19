@@ -16,6 +16,6 @@ services:
       - key: MONGODB_DB
         value: pantau
       - key: ALLOWED_ORIGINS
-        value: http://localhost:5173 # ganti/tambah URL Netlify di Tugas 8
+        value: http://localhost:5173,https://pantau-map.netlify.app # pisahkan dengan koma
       - key: GIN_MODE
         value: release
