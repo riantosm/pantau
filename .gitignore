@@ -1,0 +1,25 @@
+# Rahasia — jangan pernah di-commit
+.env
+.env.*
+!.env.example
+
+# Soal tes (tidak ikut repo publik)
+*.pdf
+
+# Go
+backend/app
+backend/bin/
+*.test
+*.out
+coverage.*
+
+# Node / Vite
+node_modules/
+dist/
+*.local
+
+# Editor & OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
