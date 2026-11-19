@@ -40,6 +40,7 @@ func New(d Deps) *gin.Engine {
 	}))
 
 	r.GET("/healthz", healthz(d.Client))
+	r.HEAD("/healthz", healthz(d.Client)) // layanan pemantau uptime sering memakai HEAD
 
 	// Repository Mongo. entityRepo juga dipakai handler jenis untuk menghitung pemakaian,
 	// dan typeRepo dipakai handler entitas untuk memastikan typeId ada.
