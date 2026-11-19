@@ -1,0 +1,21 @@
+# Blueprint Render untuk backend Go (Free, Singapore).
+# Render → New → Blueprint → pilih repo ini. Nilai MONGODB_URI diisi saat setup (tidak disimpan di repo).
+services:
+  - type: web
+    name: pantau-api
+    runtime: go
+    plan: free
+    region: singapore
+    rootDir: backend
+    buildCommand: go build -tags netgo -ldflags '-s -w' -o app ./cmd/server
+    startCommand: ./app
+    healthCheckPath: /healthz
+    envVars:
+      - key: MONGODB_URI
+        sync: false # rahasia: diminta saat membuat Blueprint
+      - key: MONGODB_DB
+        value: pantau
+      - key: ALLOWED_ORIGINS
+        value: http://localhost:5173 # ganti/tambah URL Netlify di Tugas 8
+      - key: GIN_MODE
+        value: release
